@@ -1,0 +1,45 @@
+{
+  "name": "gatsby-remark-static-images",
+  "version": "1.0.0",
+  "description": "Copy images in markdown without processing them.",
+  "main": "index.js",
+  "repository": "https://github.com/Mrtenz/gatsby-remark-static-images.git",
+  "author": "Maarten Zuidhoorn <maarten@zuidhoorn.com>",
+  "license": "MIT",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "remark",
+    "images"
+  ],
+  "dependencies": {
+    "is-relative-url": "^2.0.0",
+    "slash": "^2.0.0",
+    "unist-util-select": "^1.5.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.51",
+    "@babel/core": "^7.0.0-beta.51",
+    "@babel/preset-env": "^7.0.0-beta.51",
+    "eslint": "^5.0.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-node": "^6.0.1",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.2.0",
+    "prettier": "^1.13.7"
+  },
+  "scripts": {
+    "build": "babel src --out-dir .",
+    "prepublish": "yarn run build",
+    "precommit": "lint-staged",
+    "postcommit": "git update-index --again",
+    "prettier:diff": "prettier --write --config ./.prettierrc --list-different 'src/**/*.js'"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write --config ./.prettierrc --config-precedence file-override",
+      "eslint",
+      "git add"
+    ]
+  }
+}
