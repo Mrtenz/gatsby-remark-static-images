@@ -25,7 +25,7 @@ module.exports = ({ files, markdownAST, markdownNode, getNode, pathPrefix }) => 
       }
 
       const name = `${imageNode.name}-${imageNode.internal.contentDigest}.${imageNode.extension}`;
-      node.url = path.join(pathPrefix || '/', 'static', name);
+      node.url = path.join(pathPrefix || '/', 'static', name).replace(/\\/g, '/');
 
       const imageFile = path.join(process.cwd(), 'public/static', name);
       return new Promise((resolve, reject) => {
