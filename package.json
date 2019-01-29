@@ -13,6 +13,7 @@
     "images"
   ],
   "dependencies": {
+    "himalaya": "^1.1.0",
     "is-relative-url": "^2.0.0",
     "slash": "^2.0.0"
   },
