@@ -34,7 +34,7 @@
     "typescript": "^3.2.4"
   },
   "scripts": {
-    "build": "babel --extensions '.ts' src --out-dir .",
+    "build": "babel --extensions '.ts' src/index.ts --out-dir .",
     "prepublish": "yarn run build",
     "prettier:diff": "prettier --write --config ./.prettierrc --list-different 'src/**/*.ts'"
   },
