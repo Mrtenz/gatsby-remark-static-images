@@ -14,32 +14,40 @@
   ],
   "dependencies": {
     "is-relative-url": "^2.0.0",
-    "slash": "^2.0.0",
-    "unist-util-select": "^1.5.0"
+    "slash": "^2.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.51",
-    "@babel/core": "^7.0.0-beta.51",
-    "@babel/preset-env": "^7.0.0-beta.51",
-    "eslint": "^5.0.1",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-node": "^6.0.1",
-    "husky": "^0.14.3",
-    "lint-staged": "^7.2.0",
-    "prettier": "^1.13.7"
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-typescript": "^7.1.0",
+    "@types/is-relative-url": "^2.0.0",
+    "@types/node": "^10.12.19",
+    "@types/slash": "^2.0.0",
+    "husky": "^1.3.1",
+    "lint-staged": "^8.1.1",
+    "prettier": "^1.16.1",
+    "tslint": "^5.12.1",
+    "tslint-config-prettier": "^1.17.0",
+    "tslint-microsoft-contrib": "^6.0.0",
+    "typescript": "^3.2.4"
   },
   "scripts": {
-    "build": "babel src --out-dir .",
+    "build": "babel --extensions '.ts' src --out-dir .",
     "prepublish": "yarn run build",
-    "precommit": "lint-staged",
-    "postcommit": "git update-index --again",
-    "prettier:diff": "prettier --write --config ./.prettierrc --list-different 'src/**/*.js'"
+    "prettier:diff": "prettier --write --config ./.prettierrc --list-different 'src/**/*.ts'"
   },
   "lint-staged": {
-    "*.js": [
+    "*.ts": [
       "prettier --write --config ./.prettierrc --config-precedence file-override",
-      "eslint",
+      "tslint --project .",
       "git add"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "post-commit": "git update-index --again"
+    }
   }
 }
