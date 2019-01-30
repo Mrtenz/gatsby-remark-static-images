@@ -128,7 +128,7 @@ module.exports = ({
         }`;
         const imagePath = path.resolve(process.cwd(), 'public/static', imageName);
 
-        node.url = path.join(pathPrefix || '/', 'static', imageName);
+        node.url = slash(path.join(pathPrefix || '/', 'static', imageName));
 
         return processImage(fileNode.absolutePath, imagePath);
       })
@@ -171,7 +171,7 @@ module.exports = ({
             }`;
             const imagePath = path.resolve(process.cwd(), 'public/static', imageName);
 
-            src.value = path.join(pathPrefix || '/', 'static', imageName);
+            src.value = slash(path.join(pathPrefix || '/', 'static', imageName));
 
             promises.push(processImage(fileNode.absolutePath, imagePath));
           });
