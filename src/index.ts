@@ -138,7 +138,7 @@ module.exports = ({
   /**
    * Process all HTML nodes, by parsing the HTML and searching for any images.
    *
-   * @param {MarkdownNode[]} htmlNodes
+   * @param {MarkdownNode[]>} nodes
    */
   const processHtmlNodes = (nodes: MarkdownNode[]): Promise<any> => {
     return Promise.all([
