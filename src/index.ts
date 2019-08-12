@@ -177,7 +177,9 @@ module.exports = ({
           });
         });
 
-        node.value = stringify(htmlASTNodes);
+        if (promises.length) {
+          node.value = stringify(htmlASTNodes);
+        }
 
         return promises;
       })
