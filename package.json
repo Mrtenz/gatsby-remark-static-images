@@ -1,6 +1,6 @@
 {
   "name": "gatsby-remark-static-images",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Copy images in markdown without processing them.",
   "main": "index.js",
   "repository": "https://github.com/Mrtenz/gatsby-remark-static-images.git",
