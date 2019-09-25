@@ -23,3 +23,24 @@ plugins: [
   }
 ]
 ```
+
+### Customization ###
+
+By default files are saved to public/static and named `${fileNode.name}-${fileNode.internal.contentDigest}.${fileNode.extension}`. This can be overridden like so:
+
+```js
+// gatsby-config.js
+plugins: [
+  {
+    resolve: 'gatsby-transformer-remark',
+    options: {
+      plugins: [
+        'gatsby-remark-static-images',
+        generateImageName: (fileNode) => {
+          return `${fileNode.internal.contentDigest}/${fileNode.name}.${fileNode.extension}`
+        }
+      ]
+    }
+  }
+]
+```

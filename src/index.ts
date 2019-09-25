@@ -51,19 +51,22 @@ const getNodes = <T extends { type: string; children?: T[] }>(node: T, type: str
   return output;
 };
 
-module.exports = ({
-  files,
-  markdownAST,
-  markdownNode,
-  pathPrefix,
-  getNode
-}: {
-  files: GatsbyFile[];
-  markdownAST: MarkdownNode;
-  markdownNode: GatsbyMarkdownNode;
-  pathPrefix?: string;
-  getNode(uuid: string): GatsbyMarkdownNode;
-}): Promise<any> => {
+module.exports = (
+  {
+    files,
+    markdownAST,
+    markdownNode,
+    pathPrefix,
+    getNode
+  }: {
+    files: GatsbyFile[];
+    markdownAST: MarkdownNode;
+    markdownNode: GatsbyMarkdownNode;
+    pathPrefix?: string;
+    getNode(uuid: string): GatsbyMarkdownNode;
+  },
+  pluginOptions: object
+): Promise<any> => {
   const imageNodes = getNodes(markdownAST, 'image');
   const htmlNodes = getNodes(markdownAST, 'html');
 
@@ -93,6 +96,7 @@ module.exports = ({
     return new Promise((resolve, reject) => {
       if (!fs.existsSync(outputPath)) {
         const readStream = fs.createReadStream(imagePath);
+        fs.mkdirSync(path.dirname(outputPath), { recursive: true });
         const writeStream = fs.createWriteStream(outputPath);
 
         readStream.on('error', reject);
@@ -123,9 +127,9 @@ module.exports = ({
           return Promise.resolve();
         }
 
-        const imageName = `${fileNode.name}-${fileNode.internal.contentDigest}.${
-          fileNode.extension
-        }`;
+        const imageName = pluginOptions.generateImageName
+          ? pluginOptions.generateImageName(fileNode)
+          : `${fileNode.name}-${fileNode.internal.contentDigest}.${fileNode.extension}`;
         const imagePath = path.resolve(process.cwd(), 'public/static', imageName);
 
         node.url = slash(path.join(pathPrefix || '/', 'static', imageName));
@@ -166,9 +170,9 @@ module.exports = ({
               return Promise.resolve();
             }
 
-            const imageName = `${fileNode.name}-${fileNode.internal.contentDigest}.${
-              fileNode.extension
-            }`;
+            const imageName = pluginOptions.generateImageName
+              ? pluginOptions.generateImageName(fileNode)
+              : `${fileNode.name}-${fileNode.internal.contentDigest}.${fileNode.extension}`;
             const imagePath = path.resolve(process.cwd(), 'public/static', imageName);
 
             src.value = slash(path.join(pathPrefix || '/', 'static', imageName));
