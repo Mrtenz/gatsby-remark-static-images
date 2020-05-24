@@ -17,5 +17,5 @@ deploy:
   api_key: $NPM_API_KEY
   cleanup: false
   edge: true
-    on:
-      tags: true
+  on:
+    tags: true
