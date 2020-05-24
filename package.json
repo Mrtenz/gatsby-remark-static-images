@@ -25,6 +25,7 @@
     "@types/is-relative-url": "^2.0.0",
     "@types/node": "^10.12.19",
     "@types/slash": "^2.0.0",
+    "codecov": "^3.7.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.6",
     "prettier": "^1.16.1",

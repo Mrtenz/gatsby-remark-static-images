@@ -1,0 +1,25 @@
+language: node_js
+
+cache:
+  yarn: true
+
+install:
+  - yarn --silent
+
+script:
+#  - yarn run test
+#  - yarn run codecov -f coverage/*.json
+  - yarn run lint
+
+before_deploy:
+  - yarn run build:docs
+  - touch docs/.nojekyll
+
+deploy:
+  provider: npm
+  email: $NPM_EMAIL
+  api_key: $NPM_API_KEY
+  cleanup: false
+  edge: true
+    on:
+      tags: true
