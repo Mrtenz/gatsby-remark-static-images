@@ -11,10 +11,6 @@ script:
 #  - yarn run codecov -f coverage/*.json
   - yarn run lint
 
-before_deploy:
-  - yarn run build:docs
-  - touch docs/.nojekyll
-
 deploy:
   provider: npm
   email: $NPM_EMAIL
