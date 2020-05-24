@@ -1,8 +1,8 @@
-import * as path from 'path';
 import * as fs from 'fs';
-import slash from 'slash';
-import isRelative from 'is-relative-url';
 import { parse, stringify } from 'himalaya';
+import isRelative from 'is-relative-url';
+import * as path from 'path';
+import slash from 'slash';
 
 interface GatsbyFile {
   name: string;
@@ -63,7 +63,7 @@ module.exports = ({
   markdownNode: GatsbyMarkdownNode;
   pathPrefix?: string;
   getNode(uuid: string): GatsbyMarkdownNode;
-}): Promise<any> => {
+}): Promise<unknown> => {
   const imageNodes = getNodes(markdownAST, 'image');
   const htmlNodes = getNodes(markdownAST, 'html');
 
@@ -89,7 +89,7 @@ module.exports = ({
    * @param {string} imagePath
    * @param {string} outputPath
    */
-  const processImage = (imagePath: string, outputPath: string): Promise<any> => {
+  const processImage = (imagePath: string, outputPath: string): Promise<void> => {
     return new Promise((resolve, reject) => {
       if (!fs.existsSync(outputPath)) {
         const readStream = fs.createReadStream(imagePath);
@@ -111,7 +111,7 @@ module.exports = ({
    *
    * @param {MarkdownNode[]} nodes
    */
-  const processImageNodes = (nodes: MarkdownNode[]): Promise<any> => {
+  const processImageNodes = (nodes: MarkdownNode[]): Promise<void[]> => {
     return Promise.all(
       nodes.map(node => {
         if (!isRelative(node.url!)) {
@@ -140,11 +140,11 @@ module.exports = ({
    *
    * @param {MarkdownNode[]>} nodes
    */
-  const processHtmlNodes = (nodes: MarkdownNode[]): Promise<any> => {
+  const processHtmlNodes = (nodes: MarkdownNode[]): Promise<Array<Array<Promise<void>>>> => {
     return Promise.all([
       ...nodes.map(node => {
         const htmlASTNodes = parse(node.value!);
-        const promises: Promise<any>[] = [];
+        const promises: Array<Promise<void>> = [];
 
         htmlASTNodes.forEach(htmlAST => {
           const htmlImageNodes = getNodes(htmlAST, 'element').filter(
