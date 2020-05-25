@@ -1,6 +1,15 @@
 {
+  "comments": false,
+  "ignore": ["**/*.d.ts"],
   "presets": [
     "@babel/preset-typescript",
-    "@babel/preset-env"
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": 10
+        }
+      }
+    ]
   ]
 }
