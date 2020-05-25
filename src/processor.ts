@@ -5,6 +5,10 @@ import path from 'path';
 import slash from 'slash';
 import { getNodes } from './utils';
 
+interface Options {
+  imageName?(fileNode: FileNode): string;
+}
+
 interface FileNode {
   name: string;
   extension: string;
@@ -29,19 +33,22 @@ interface ASTNode {
   children?: ASTNode[];
 }
 
-const processStaticImages = async ({
-  files,
-  markdownAST,
-  markdownNode,
-  pathPrefix,
-  getNode
-}: {
-  files: FileNode[];
-  markdownAST: ASTNode;
-  markdownNode: MarkdownNode;
-  pathPrefix?: string;
-  getNode(uuid: string): MarkdownNode;
-}): Promise<void> => {
+const processStaticImages = async (
+  {
+    files,
+    markdownAST,
+    markdownNode,
+    pathPrefix,
+    getNode
+  }: {
+    files: FileNode[];
+    markdownAST: ASTNode;
+    markdownNode: MarkdownNode;
+    pathPrefix?: string;
+    getNode(uuid: string): MarkdownNode;
+  },
+  options?: Options
+): Promise<void> => {
   const imageNodes = getNodes(markdownAST, 'image');
   const htmlNodes = getNodes(markdownAST, 'html');
 
@@ -58,7 +65,7 @@ const processStaticImages = async ({
   const getFileNode = (url: string): FileNode | undefined => {
     const imagePath = slash(path.resolve(parentNode.dir!, url));
 
-    return files.find(file => file.absolutePath === imagePath);
+    return files.find((file) => file.absolutePath === imagePath);
   };
 
   /**
@@ -91,7 +98,10 @@ const processStaticImages = async ({
    * @return {string}
    */
   const getFileName = (fileNode: FileNode): string => {
-    return `${fileNode.name}-${fileNode.internal.contentDigest}.${fileNode.extension}`;
+    return (
+      options?.imageName?.(fileNode) ??
+      `${fileNode.name}-${fileNode.internal.contentDigest}.${fileNode.extension}`
+    );
   };
 
   /**
@@ -122,7 +132,7 @@ const processStaticImages = async ({
    * @param {ASTNode[]} nodes
    */
   const processImageNodes = (nodes: ASTNode[]): Array<Promise<void>> => {
-    return nodes.map(async node => {
+    return nodes.map(async (node) => {
       if (!isRelative(node.url!)) {
         return;
       }
@@ -143,14 +153,14 @@ const processStaticImages = async ({
    * @param {MarkdownNode[]>} nodes
    */
   const processHtmlNodes = (nodes: ASTNode[]): Array<Promise<void>> => {
-    return nodes.flatMap(node => {
+    return nodes.flatMap((node) => {
       const htmlASTNodes = parse(node.value!);
 
       const promises = htmlASTNodes
-        .flatMap(htmlAST => getNodes(htmlAST, 'element'))
-        .filter(element => element.tagName === 'img')
-        .map(async imageNode => {
-          const src = imageNode.attributes.find(attribute => attribute.key === 'src');
+        .flatMap((htmlAST) => getNodes(htmlAST, 'element'))
+        .filter((element) => element.tagName === 'img')
+        .map(async (imageNode) => {
+          const src = imageNode.attributes.find((attribute) => attribute.key === 'src');
           if (!src) {
             return;
           }

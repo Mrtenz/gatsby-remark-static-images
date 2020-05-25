@@ -18,7 +18,7 @@ export const getNodes = <T extends { type: string; children?: T[] }>(
   }
 
   if (node.children) {
-    node.children.forEach(child => output.push(...getNodes(child, type)));
+    node.children.forEach((child) => output.push(...getNodes(child, type)));
   }
 
   return output;

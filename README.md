@@ -23,3 +23,22 @@ plugins: [
   }
 ]
 ```
+
+## Options
+
+### `imageName`
+
+This option lets you specify the output name for the image. It should be a function that takes a `File` node and returns the name of the image as a string.
+
+Defaults to: `(node) => ${node.name}-${node.internal.contentDigest}.${node.extension}`.
+
+#### Example
+
+```js
+{
+  resolve: 'gatsby-remark-static-images',
+  options: {
+    imageName: (node) => `${node.name}.${node.extension}`
+  }
+}
+```
