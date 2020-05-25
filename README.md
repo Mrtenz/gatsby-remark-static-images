@@ -1,5 +1,8 @@
 # gatsby-remark-static-images
 
+
+![Version](https://img.shields.io/npm/v/gatsby-remark-static-images) ![License](https://img.shields.io/github/license/Mrtenz/gatsby-remark-static-images) [![Travis CI](https://travis-ci.com/Mrtenz/gatsby-remark-static-images.svg?branch=master)](https://travis-ci.com/Mrtenz/gatsby-remark-static-images)
+
 Copy images in markdown without processing them. Can be used in combination with `gatsby-remark-images` to copy SVG and GIF files. Make sure to place this plugin _after_ `gatsby-remark-images`.
 
 ## Getting started
