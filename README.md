@@ -1,5 +1,10 @@
 # gatsby-remark-static-images
 
+## Deprecated
+
+This plugin is deprecated and may not work properly with the latest version of Gatsby. You can use the official plugin [`gatsby-remark-copy-linked-files`](https://www.gatsbyjs.com/plugins/gatsby-remark-copy-linked-files/) instead. which works mostly the same as this plugin.
+
+---
 
 ![Version](https://img.shields.io/npm/v/gatsby-remark-static-images) ![License](https://img.shields.io/github/license/Mrtenz/gatsby-remark-static-images) [![Travis CI](https://travis-ci.com/Mrtenz/gatsby-remark-static-images.svg?branch=master)](https://travis-ci.com/Mrtenz/gatsby-remark-static-images)
 
